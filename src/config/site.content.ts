@@ -2,83 +2,91 @@ import type { TaskKey } from '@/lib/site-config'
 
 export const siteContent = {
   navbar: {
-    tagline: 'Independent news desk',
+    tagline: 'Media distribution desk',
   },
   footer: {
-    tagline: 'Simple publishing for press-style updates',
+    tagline: 'Press releases built for discovery and credibility',
   },
   hero: {
-    badge: 'Latest updates',
-    title: ['Clear publishing, simple reading, no extra noise.'],
+    badge: 'Press distribution',
+    title: ['Reach journalists, feeds, and readers with a newsroom built for clarity.'],
     description:
-      'A minimal article-style publishing template built for regular updates, announcements, and media distribution posts.',
+      'Presslyy is a media press release workspace: publish once, distribute with structure, and keep a public archive that looks like a modern news desk.',
     primaryCta: {
-      label: 'Browse latest posts',
+      label: 'Browse newsroom',
       href: '/updates',
     },
     secondaryCta: {
-      label: 'Contact us',
-      href: '/contact',
+      label: 'View pricing',
+      href: '/pricing',
     },
-    searchPlaceholder: 'Search posts',
+    searchPlaceholder: 'Search releases',
     focusLabel: 'Latest',
-    featureCardBadge: 'editor note',
-    featureCardTitle: 'Recent updates appear directly on the homepage.',
+    featureCardBadge: 'Spotlight',
+    featureCardTitle: 'Your announcement stays readable in every channel.',
     featureCardDescription:
-      'The homepage works as a clean front page so new posts stay visible without decorative sections getting in the way.',
+      'Headlines, summaries, and article pages are tuned for scanning—so busy editors and readers get the point fast.',
   },
   home: {
     metadata: {
-      title: 'Latest updates and newsroom posts',
+      title: 'Presslyy — Press release distribution and newsroom',
       description:
-        'Read the latest updates, announcements, and stories through a simple archive-first publishing experience.',
-      openGraphTitle: 'Latest updates and newsroom posts',
+        'Publish press releases, grow visibility, and keep a credible public newsroom with Presslyy.',
+      openGraphTitle: 'Presslyy — Press release distribution',
       openGraphDescription:
-        'A simple publishing template for updates, announcements, and readable article pages.',
-      keywords: ['newsroom posts', 'latest updates', 'announcements', 'press articles'],
+        'Modern press release distribution with a clean newsroom, readable article pages, and pricing that scales.',
+      keywords: [
+        'press release',
+        'media distribution',
+        'newsroom',
+        'PR distribution',
+        'announcements',
+        'Presslyy',
+      ],
     },
-    introBadge: 'About',
-    introTitle: 'A quiet publishing template made for regular updates.',
+    introBadge: 'Why teams choose Presslyy',
+    introTitle: 'A publishing surface that matches how media actually works.',
     introParagraphs: [
-      'This template is designed for sites that publish straightforward updates and want the homepage to behave like a clean front page rather than a product landing page.',
-      'Posts are visible immediately, archives stay easy to scan, and the reading page keeps the focus on the article itself.',
-      'The interface is intentionally simple so the site feels usable, familiar, and fast to update.',
+      'Editors skim. Search indexes structure. Your page should make the story obvious in seconds—not buried in decorative chrome.',
+      'Presslyy keeps the newsroom legible, the article typography calm, and the path from headline to detail frictionless.',
     ],
-    sideBadge: 'What it prioritizes',
+    sideBadge: 'What you get',
     sidePoints: [
-      'Recent posts directly on the homepage.',
-      'Simple archive layout with sidebar search and recent items.',
-      'Readable article pages without comments or extra modules.',
-      'A publishing-first structure that stays easy to maintain.',
+      'A public newsroom grid with filters and search.',
+      'Article pages tuned for reading and sharing.',
+      'Pricing tiers for teams from first launch to high volume.',
     ],
     primaryLink: {
-      label: 'Open archive',
+      label: 'Open newsroom',
       href: '/updates',
     },
     secondaryLink: {
-      label: 'Contact desk',
+      label: 'Talk to us',
       href: '/contact',
     },
   },
   cta: {
-    badge: 'Get in touch',
-    title: 'Use this template when publishing regular updates matters more than visual effects.',
+    badge: 'Distribution support',
+    title: 'Need help choosing a plan or preparing a release?',
     description:
-      'A straightforward layout for announcements, media coverage, partner updates, and newsroom-style content.',
+      'Tell us your timeline, audience, and assets—we will point you to the right workflow and distribution level.',
     primaryCta: {
-      label: 'Contact us',
+      label: 'Contact',
       href: '/contact',
     },
     secondaryCta: {
-      label: 'View archive',
+      label: 'Read the newsroom',
       href: '/updates',
     },
   },
-  taskSectionHeading: 'Latest posts',
-  taskSectionDescriptionSuffix: 'Read the newest published updates.',
+  taskSectionHeading: 'Latest releases',
+  taskSectionDescriptionSuffix: 'Fresh announcements from the Presslyy newsroom.',
 } as const
 
-export const taskPageMetadata: Record<Exclude<TaskKey, 'comment' | 'org' | 'social'>, { title: string; description: string }> = {
+export const taskPageMetadata: Record<
+  Exclude<TaskKey, 'comment' | 'org' | 'social'>,
+  { title: string; description: string }
+> = {
   article: {
     title: 'Articles',
     description: 'Read the latest posts and long-form updates.',
@@ -108,8 +116,8 @@ export const taskPageMetadata: Record<Exclude<TaskKey, 'comment' | 'org' | 'soci
     description: 'Open PDFs and downloadable files.',
   },
   mediaDistribution: {
-    title: 'Latest updates',
-    description: 'Read the latest published updates and announcements.',
+    title: 'Latest press releases',
+    description: 'Browse the newsroom archive with filters and search.',
   },
 }
 
@@ -117,7 +125,11 @@ export const taskIntroCopy: Record<
   TaskKey,
   { title: string; paragraphs: string[]; links: { label: string; href: string }[] }
 > = {
-  listing: { title: 'Listings', paragraphs: ['Directory entries and service pages.'], links: [{ label: 'Home', href: '/' }] },
+  listing: {
+    title: 'Listings',
+    paragraphs: ['Directory entries and service pages.'],
+    links: [{ label: 'Home', href: '/' }],
+  },
   article: { title: 'Articles', paragraphs: ['General long-form article feed.'], links: [{ label: 'Home', href: '/' }] },
   classified: { title: 'Classifieds', paragraphs: ['Short-form posts and notices.'], links: [{ label: 'Home', href: '/' }] },
   image: { title: 'Images', paragraphs: ['Image-first posts and galleries.'], links: [{ label: 'Home', href: '/' }] },
@@ -128,14 +140,14 @@ export const taskIntroCopy: Record<
   comment: { title: 'Comments', paragraphs: ['Commentary and response posts.'], links: [{ label: 'Home', href: '/' }] },
   org: { title: 'Organizations', paragraphs: ['Organization pages and entities.'], links: [{ label: 'Home', href: '/' }] },
   mediaDistribution: {
-    title: 'Latest updates',
+    title: 'Newsroom archive',
     paragraphs: [
-      'This archive is designed for straightforward publishing: regular updates, announcements, and media-style posts presented in a clean reading format.',
-      'The layout stays simple so visitors can scan headlines quickly, open stories easily, and move through the archive without distraction.',
+      'Browse published press releases with category filters, date refinements, and site search to jump straight to the story you need.',
+      'Each release opens into a full article view with sharing tools and related reading to keep context close.',
     ],
     links: [
       { label: 'Home', href: '/' },
-      { label: 'Contact', href: '/contact' },
+      { label: 'Pricing', href: '/pricing' },
     ],
   },
 }

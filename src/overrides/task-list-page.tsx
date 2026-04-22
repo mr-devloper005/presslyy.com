@@ -1,58 +1,147 @@
 import Link from 'next/link'
+import { Filter, Search } from 'lucide-react'
 import { NavbarShell } from '@/components/shared/navbar-shell'
 import { Footer } from '@/components/shared/footer'
 import { fetchTaskPosts } from '@/lib/task-data'
-import type { TaskKey } from '@/lib/site-config'
+import { SITE_CONFIG, getTaskConfig, type TaskKey } from '@/lib/site-config'
+import { CATEGORY_OPTIONS, normalizeCategory } from '@/lib/categories'
+import { taskIntroCopy } from '@/config/site.content'
+import { TaskListClient } from '@/components/tasks/task-list-client'
+import { SchemaJsonLd } from '@/components/seo/schema-jsonld'
 
 export const TASK_LIST_PAGE_OVERRIDE_ENABLED = true
 
-function excerpt(text?: string | null) {
-  const value = (text || '').trim()
-  if (!value) return 'Read the full post for the complete update.'
-  return value.length > 220 ? value.slice(0, 217).trimEnd() + '...' : value
-}
-
-export async function TaskListPageOverride(_: { task: TaskKey; category?: string }) {
-  const posts = await fetchTaskPosts('mediaDistribution', 24, { fresh: true })
-  const recent = posts.slice(0, 5)
+export async function TaskListPageOverride({
+  task,
+  category,
+  publishedAfter,
+}: {
+  task: TaskKey
+  category?: string
+  publishedAfter?: string
+}) {
+  const taskConfig = getTaskConfig(task)
+  const posts = await fetchTaskPosts(task, 36, { fresh: true })
+  const normalizedCategory = category ? normalizeCategory(category) : 'all'
+  const intro = taskIntroCopy[task]
+  const baseUrl = SITE_CONFIG.baseUrl.replace(/\/$/, '')
+  const listPath = taskConfig?.route || '/updates'
+  const schemaItems = posts.slice(0, 12).map((post, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    url: `${baseUrl}${listPath}/${post.slug}`,
+    name: post.title,
+  }))
 
   return (
-    <div className="min-h-screen bg-white text-neutral-900">
+    <div className="min-h-screen bg-[#f6f4f8] text-[#413f42]">
       <NavbarShell />
-      <main className="mx-auto grid max-w-6xl gap-12 px-4 py-10 sm:px-6 lg:grid-cols-[minmax(0,1fr)_280px]">
-        <div className="space-y-14">
-          {posts.map((post) => (
-            <article key={post.id} className="border-b border-neutral-200 pb-12">
-              <p className="text-center text-xs font-semibold uppercase tracking-[0.14em] text-neutral-500">{String((post.content as any)?.category || 'Update')}</p>
-              <h1 className="mx-auto mt-3 max-w-4xl text-center text-3xl font-black uppercase leading-tight tracking-[0.02em] sm:text-4xl">{post.title}</h1>
-              <div className="mt-4 flex items-center justify-center gap-3 text-sm text-neutral-500">
-                <span className="bg-neutral-800 px-3 py-1 text-white">{new Date(post.publishedAt || Date.now()).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
-                <span>by {post.authorName || 'Editorial Desk'}</span>
-              </div>
-              <p className="mx-auto mt-8 max-w-3xl text-lg leading-9 text-neutral-700">{excerpt(post.summary)}</p>
-              <div className="mt-8 text-center">
-                <Link href={`/updates/${post.slug}`} className="inline-flex rounded-full bg-neutral-800 px-8 py-3 text-sm font-medium text-white hover:bg-black">Continue Reading</Link>
-              </div>
-            </article>
-          ))}
+      <SchemaJsonLd
+        data={{
+          '@context': 'https://schema.org',
+          '@type': 'CollectionPage',
+          name: `${taskConfig?.label || 'Newsroom'} | ${SITE_CONFIG.name}`,
+          url: `${baseUrl}${listPath}`,
+          hasPart: schemaItems,
+        }}
+      />
+
+      <section className="border-b border-[#16003b]/8 bg-[#16003b] text-white">
+        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:py-16 lg:px-8">
+          <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[#f73d93]">From the newsroom</p>
+          <h1 className="mt-3 max-w-3xl text-3xl font-semibold tracking-[-0.03em] sm:text-4xl lg:text-[2.35rem]">
+            Latest press releases
+          </h1>
+          <p className="mt-5 max-w-2xl text-sm leading-relaxed text-white/85">
+            Browse announcements with category filters, optional date refinements, and site search for fast discovery.
+          </p>
         </div>
-        <aside className="space-y-6">
-          <div className="border border-neutral-200 p-6">
-            <div className="flex items-center gap-0">
-              <input className="h-12 flex-1 border border-neutral-200 px-4 text-sm outline-none" placeholder="Type here to search" />
-              <button className="flex h-12 w-12 items-center justify-center bg-neutral-800 text-white">Q</button>
-            </div>
-          </div>
-          <div className="border border-neutral-200 p-6">
-            <div className="space-y-5">
-              {recent.map((post) => (
-                <Link key={post.id} href={`/updates/${post.slug}`} className="block border-b border-neutral-200 pb-5 last:border-b-0 last:pb-0">
-                  <p className="text-base leading-7 text-neutral-700">{post.title}</p>
+      </section>
+
+      <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+        {intro ? (
+          <section className="mb-10 rounded-2xl border border-[#16003b]/10 bg-white p-6 shadow-sm sm:p-8">
+            <h2 className="text-xl font-semibold text-[#16003b]">{intro.title}</h2>
+            {intro.paragraphs.map((paragraph) => (
+              <p key={paragraph.slice(0, 48)} className="mt-4 text-sm leading-relaxed text-[#7f8487]">
+                {paragraph}
+              </p>
+            ))}
+            <div className="mt-4 flex flex-wrap gap-4 text-sm font-semibold">
+              {intro.links.map((link) => (
+                <Link key={link.href} href={link.href} className="text-[#f73d93] hover:underline">
+                  {link.label}
                 </Link>
               ))}
             </div>
-          </div>
-        </aside>
+          </section>
+        ) : null}
+
+        <div className="mb-10 flex flex-col gap-4 rounded-2xl border border-[#16003b]/10 bg-white p-4 shadow-sm sm:flex-row sm:items-end sm:justify-between sm:p-6">
+          <form className="grid w-full gap-4 sm:grid-cols-[1fr_1fr_auto]" action={listPath} method="get">
+            <div>
+              <label htmlFor="newsroom-category" className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-[#7f8487]">
+                <Filter className="h-3.5 w-3.5" aria-hidden />
+                Category
+              </label>
+              <select
+                id="newsroom-category"
+                name="category"
+                defaultValue={normalizedCategory === 'all' ? 'all' : normalizedCategory}
+                className="mt-2 h-11 w-full rounded-xl border border-[#16003b]/12 bg-[#f6f4f8] px-3 text-sm text-[#413f42] outline-none ring-[#f73d93]/30 focus:ring-2"
+              >
+                <option value="all">All categories</option>
+                {CATEGORY_OPTIONS.map((item) => (
+                  <option key={item.slug} value={item.slug}>
+                    {item.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label htmlFor="newsroom-from" className="text-xs font-semibold uppercase tracking-[0.16em] text-[#7f8487]">
+                Published on or after
+              </label>
+              <input
+                id="newsroom-from"
+                type="date"
+                name="from"
+                defaultValue={publishedAfter || ''}
+                className="mt-2 h-11 w-full rounded-xl border border-[#16003b]/12 bg-[#f6f4f8] px-3 text-sm text-[#413f42] outline-none ring-[#f73d93]/30 focus:ring-2"
+              />
+            </div>
+            <div className="flex items-end gap-2">
+              <button
+                type="submit"
+                className="h-11 w-full rounded-xl bg-[#16003b] px-6 text-sm font-semibold text-white shadow-sm transition hover:bg-[#2a0a5c] sm:w-auto"
+              >
+                Apply
+              </button>
+            </div>
+          </form>
+
+          <form action="/search" method="get" className="flex w-full max-w-md items-center gap-2 sm:w-auto">
+            <div className="relative flex-1">
+              <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#7f8487]" aria-hidden />
+              <input
+                name="q"
+                placeholder="Search releases…"
+                className="h-11 w-full rounded-xl border border-[#16003b]/12 bg-[#f6f4f8] py-2 pl-10 pr-3 text-sm text-[#413f42] outline-none ring-[#f73d93]/30 focus:ring-2"
+              />
+            </div>
+            <button type="submit" className="h-11 shrink-0 rounded-xl bg-[#f73d93] px-4 text-sm font-semibold text-white hover:bg-[#e02d82]">
+              Go
+            </button>
+          </form>
+        </div>
+
+        <TaskListClient
+          task={task}
+          initialPosts={posts}
+          category={normalizedCategory}
+          publishedAfter={publishedAfter}
+          listClassName="lg:grid-cols-3"
+        />
       </main>
       <Footer />
     </div>

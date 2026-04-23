@@ -1,10 +1,10 @@
 export const siteIdentity = {
   code: process.env.NEXT_PUBLIC_SITE_CODE || 'hz87rej5pm',
   name: process.env.NEXT_PUBLIC_SITE_NAME || 'Presslyy',
-  tagline: process.env.NEXT_PUBLIC_SITE_TAGLINE || 'Independent media updates',
+  tagline: process.env.NEXT_PUBLIC_SITE_TAGLINE || 'Press release distribution that reaches journalists and search',
   description:
     process.env.NEXT_PUBLIC_SITE_DESCRIPTION ||
-    'A simple newsroom-style publication for announcements, coverage, and media updates on Presslyy.',
+    'Presslyy helps teams publish polished press releases, reach media outlets, and keep a public newsroom that stays easy to scan.',
   domain: process.env.NEXT_PUBLIC_SITE_DOMAIN || 'presslyy.com',
   url: process.env.NEXT_PUBLIC_SITE_URL || 'https://presslyy.com',
   ogImage: process.env.NEXT_PUBLIC_SITE_OG_IMAGE || '/og-default.png',

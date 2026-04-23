@@ -4,31 +4,36 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: oklch(0.985 0.006 84);
-  --foreground: oklch(0.23 0.03 20);
-  --card: oklch(0.992 0.004 84 / 0.96);
-  --card-foreground: oklch(0.23 0.03 20);
-  --popover: oklch(0.992 0.004 84 / 0.98);
-  --popover-foreground: oklch(0.23 0.03 20);
-  --primary: oklch(0.41 0.15 10);
-  --primary-foreground: oklch(0.99 0.005 84);
-  --secondary: oklch(0.95 0.02 85);
-  --secondary-foreground: oklch(0.3 0.04 20);
-  --muted: oklch(0.955 0.012 85);
-  --muted-foreground: oklch(0.47 0.04 28);
-  --accent: oklch(0.76 0.1 155);
-  --accent-foreground: oklch(0.18 0.03 20);
+  /* Presslyy brand: deep plum + electric pink + neutral greys */
+  --presslyy-ink: #16003b;
+  --presslyy-pink: #f73d93;
+  --presslyy-body: #413f42;
+  --presslyy-muted: #7f8487;
+  --background: #f6f4f8;
+  --foreground: #413f42;
+  --card: #ffffff;
+  --card-foreground: #413f42;
+  --popover: #ffffff;
+  --popover-foreground: #413f42;
+  --primary: #16003b;
+  --primary-foreground: #faf8fc;
+  --secondary: #ede9f2;
+  --secondary-foreground: #16003b;
+  --muted: #eceaee;
+  --muted-foreground: #7f8487;
+  --accent: #f73d93;
+  --accent-foreground: #ffffff;
   --destructive: oklch(0.6 0.2 25);
   --destructive-foreground: oklch(0.98 0.005 84);
-  --border: oklch(0.88 0.02 70);
-  --input: oklch(0.975 0.01 84);
-  --ring: oklch(0.41 0.15 10);
-  --chart-1: oklch(0.41 0.15 10);
-  --chart-2: oklch(0.56 0.17 18);
-  --chart-3: oklch(0.76 0.1 155);
-  --chart-4: oklch(0.9 0.05 102);
-  --chart-5: oklch(0.62 0.08 175);
-  --radius: 1.3rem;
+  --border: #e2dde8;
+  --input: #f9f7fb;
+  --ring: #f73d93;
+  --chart-1: #16003b;
+  --chart-2: #f73d93;
+  --chart-3: #7f8487;
+  --chart-4: #413f42;
+  --chart-5: #c4bfd0;
+  --radius: 1rem;
   --sidebar: oklch(0.99 0.005 84);
   --sidebar-foreground: oklch(0.23 0.03 20);
   --sidebar-primary: oklch(0.41 0.15 10);
@@ -128,9 +133,9 @@
     @apply bg-background text-foreground;
     min-height: 100vh;
     background-image:
-      radial-gradient(circle at top left, rgba(110, 26, 55, 0.09), transparent 32%),
-      radial-gradient(circle at top right, rgba(114, 186, 169, 0.12), transparent 28%),
-      linear-gradient(180deg, rgba(255, 252, 246, 0.96) 0%, rgba(250, 244, 235, 0.98) 36%, rgba(247, 241, 230, 1) 100%);
+      radial-gradient(circle at 12% 0%, rgba(247, 61, 147, 0.09), transparent 42%),
+      radial-gradient(circle at 88% 8%, rgba(22, 0, 59, 0.07), transparent 38%),
+      linear-gradient(180deg, #fbf9fd 0%, #f6f4f8 45%, #f3f0f6 100%);
     background-attachment: fixed;
   }
 
@@ -140,9 +145,9 @@
     inset: 0;
     pointer-events: none;
     z-index: -1;
-    background-image: linear-gradient(rgba(255, 255, 255, 0.26) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.22) 1px, transparent 1px);
-    background-size: 120px 120px;
-    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.18), transparent 70%);
+    background-image: linear-gradient(rgba(255, 255, 255, 0.35) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.28) 1px, transparent 1px);
+    background-size: 96px 96px;
+    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.12), transparent 72%);
   }
 
   h1,
@@ -162,7 +167,7 @@
   }
 
   ::selection {
-    background: rgba(174, 36, 72, 0.18);
+    background: rgba(247, 61, 147, 0.2);
     color: inherit;
   }
 }
@@ -229,7 +234,7 @@
   font-weight: 700;
   line-height: 1.25;
   margin: 2.2rem 0 1rem;
-  color: rgb(110, 26, 55);
+  color: #16003b;
 }
 
 .article-content h3 {
@@ -244,10 +249,38 @@
 }
 
 .article-content a {
-  color: rgb(174, 36, 72);
+  color: #f73d93;
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
+}
+
+.presslyy-wave {
+  display: block;
+  width: 100%;
+  height: 48px;
+  color: #f6f4f8;
+}
+
+@keyframes presslyy-rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.presslyy-animate-rise {
+  animation: presslyy-rise 0.55s ease both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .presslyy-animate-rise {
+    animation: none;
+  }
 }
 
 

@@ -1,115 +1,95 @@
-﻿'use client'
+﻿import Link from 'next/link'
+import type { Metadata } from 'next'
+import { NavbarShell } from '@/components/shared/navbar-shell'
+import { Footer } from '@/components/shared/footer'
+import { SITE_CONFIG } from '@/lib/site-config'
+import { buildPageMetadata } from '@/lib/seo'
 
-import { useState } from 'react'
-import Image from 'next/image'
-import { PageShell } from '@/components/shared/page-shell'
-import { Card, CardContent } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog'
-import { useToast } from '@/components/ui/use-toast'
-import { mockPressAssets, mockPressCoverage } from '@/data/mock-data'
+export async function generateMetadata(): Promise<Metadata> {
+  return buildPageMetadata({
+    path: '/press',
+    title: `Press kit | ${SITE_CONFIG.name}`,
+    description: 'Brand guidelines and media contact information for Presslyy.',
+    openGraphTitle: `Press kit | ${SITE_CONFIG.name}`,
+    openGraphDescription: 'Resources for journalists and partners covering Presslyy.',
+  })
+}
+
+const deskEmail = `press@${SITE_CONFIG.domain}`
 
 export default function PressPage() {
-  const { toast } = useToast()
-  const [activeAssetId, setActiveAssetId] = useState<string | null>(null)
-  const activeAsset = mockPressAssets.find((asset) => asset.id === activeAssetId)
-
   return (
-    <PageShell
-      title="Press"
-      description="Media resources, brand assets, and press coverage."
-    >
-      <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-        <Card className="border-border bg-card">
-          <CardContent className="p-6 space-y-3">
-            <h2 className="text-lg font-semibold text-foreground">Press Kit</h2>
-            <p className="text-sm text-muted-foreground">
-              Download logos, product screenshots, and brand guidelines for media use.
+    <div className="min-h-screen bg-[#f6f4f8] text-[#413f42]">
+      <NavbarShell />
+      <main>
+        <section className="border-b border-[#16003b]/8 bg-white">
+          <div className="mx-auto max-w-3xl px-4 py-12 text-center sm:px-6 lg:py-16 lg:px-8">
+            <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[#f73d93]">For journalists</p>
+            <h1 className="mt-4 text-3xl font-semibold tracking-[-0.03em] text-[#16003b] sm:text-4xl">Press resources</h1>
+            <p className="mt-4 text-sm leading-relaxed text-[#7f8487]">
+              Use this page for factual company context, brand notes, and the fastest path to a spokesperson.
             </p>
-            <div className="grid gap-2">
-              {mockPressAssets.map((asset) => (
-                <div key={asset.id} className="rounded-lg border border-border bg-secondary/40 px-4 py-3">
-                  <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-                    <div>
-                      <p className="text-sm font-medium text-foreground">{asset.title}</p>
-                      <p className="text-xs text-muted-foreground">{asset.description}</p>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Badge variant="secondary">{asset.fileType}</Badge>
-                      <Button size="sm" variant="outline" onClick={() => setActiveAssetId(asset.id)}>
-                        Preview
-                      </Button>
-                      <Button
-                        size="sm"
-                        onClick={() =>
-                          toast({
-                            title: 'Download started',
-                            description: `${asset.title} is downloading.`,
-                          })
-                        }
-                      >
-                        Download
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-        <div className="space-y-4">
-          {mockPressCoverage.map((item) => (
-            <Card key={item.id} className="border-border bg-card transition-transform hover:-translate-y-1">
-              <CardContent className="p-6">
-                <div className="text-xs uppercase tracking-wide text-muted-foreground">{item.outlet}</div>
-                <p className="mt-2 text-sm text-foreground">{item.headline}</p>
-                <p className="mt-2 text-xs text-muted-foreground">{item.date}</p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </div>
+          </div>
+        </section>
 
-      <Dialog open={Boolean(activeAsset)} onOpenChange={() => setActiveAssetId(null)}>
-        <DialogContent className="max-w-3xl">
-          <DialogHeader>
-            <DialogTitle>{activeAsset?.title}</DialogTitle>
-          </DialogHeader>
-          {activeAsset?.previewUrl && (
-            <div className="relative aspect-[16/9] overflow-hidden rounded-xl border border-border bg-muted">
-              <Image
-                src={activeAsset.previewUrl}
-                alt={activeAsset.title}
-                fill
-                className="object-cover"
-              />
+        <div className="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14 lg:py-16 lg:px-8">
+          <section className="rounded-2xl border border-[#16003b]/10 bg-white p-6 shadow-sm sm:p-8">
+            <h2 className="text-lg font-semibold text-[#16003b]">Company snapshot</h2>
+            <dl className="mt-6 space-y-4 text-sm">
+              <div>
+                <dt className="font-medium text-[#16003b]">Legal name</dt>
+                <dd className="mt-1 text-[#7f8487]">{SITE_CONFIG.name}</dd>
+              </div>
+              <div>
+                <dt className="font-medium text-[#16003b]">What we do</dt>
+                <dd className="mt-1 text-[#7f8487]">{SITE_CONFIG.description}</dd>
+              </div>
+              <div>
+                <dt className="font-medium text-[#16003b]">Primary site</dt>
+                <dd className="mt-1">
+                  <a href={SITE_CONFIG.baseUrl} className="font-medium text-[#f73d93] hover:underline">
+                    {SITE_CONFIG.domain}
+                  </a>
+                </dd>
+              </div>
+            </dl>
+            <div className="mt-8 rounded-xl bg-[#f6f4f8] p-5">
+              <p className="text-sm font-medium text-[#16003b]">Media contact</p>
+              <a href={`mailto:${deskEmail}`} className="mt-2 inline-block text-sm font-semibold text-[#f73d93] hover:underline">
+                {deskEmail}
+              </a>
+              <p className="mt-3 text-xs text-[#7f8487]">Please include deadline, outlet, and whether commentary is on or off the record.</p>
             </div>
-          )}
-          <p className="text-sm text-muted-foreground">{activeAsset?.description}</p>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setActiveAssetId(null)}>
-              Close
-            </Button>
-            <Button
-              onClick={() =>
-                toast({
-                  title: 'Download started',
-                  description: `${activeAsset?.title} is downloading.`,
-                })
-              }
-            >
-              Download {activeAsset?.fileType}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-    </PageShell>
+          </section>
+
+          <section className="space-y-6">
+            <div className="rounded-2xl border border-[#16003b]/10 bg-white p-6 shadow-sm sm:p-8">
+              <h2 className="text-lg font-semibold text-[#16003b]">Brand usage</h2>
+              <p className="mt-3 text-sm leading-relaxed text-[#7f8487]">
+                Reference the wordmark as <span className="font-semibold text-[#16003b]">{SITE_CONFIG.name}</span>. Avoid altering
+                spacing, casing, or color for legibility—use dark plum (#16003b) on light backgrounds and white on dark surfaces.
+              </p>
+              <p className="mt-4 text-sm leading-relaxed text-[#7f8487]">
+                Need logo files? Request the brand pack by email—we will send SVG and PNG exports sized for web and print.
+              </p>
+            </div>
+            <div className="rounded-2xl bg-[#16003b] p-6 text-white sm:p-8">
+              <h2 className="text-lg font-semibold">Recent coverage starts in the newsroom</h2>
+              <p className="mt-3 text-sm leading-relaxed text-white/85">
+                Official announcements publish to the public archive first. Cite the newsroom URL when linking readers to primary
+                source material.
+              </p>
+              <Link
+                href="/updates"
+                className="mt-6 inline-flex rounded-full bg-[#f73d93] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#e02d82]"
+              >
+                Open newsroom
+              </Link>
+            </div>
+          </section>
+        </div>
+      </main>
+      <Footer />
+    </div>
   )
 }

@@ -9,11 +9,11 @@ import { LOGIN_PAGE_OVERRIDE_ENABLED, LoginPageOverride } from '@/overrides/logi
 function getLoginConfig(kind: ReturnType<typeof getProductKind>) {
   if (kind === 'directory') {
     return {
-      shell: 'bg-[#f8fbff] text-slate-950',
-      panel: 'border border-slate-200 bg-white',
-      side: 'border border-slate-200 bg-slate-50',
-      muted: 'text-slate-600',
-      action: 'bg-slate-950 text-white hover:bg-slate-800',
+      shell: 'bg-[#f8f0f7] text-[#5B2B3B]',
+      panel: 'border border-[#e6d4e0] bg-white shadow-[0_24px_64px_rgba(91,43,59,0.08)]',
+      side: 'border border-[#e6d4e0] bg-[#f5eef2]',
+      muted: 'text-[#7a5d6b]',
+      action: 'bg-[#f73d93] text-white hover:bg-[#e639b8]',
       icon: Building2,
       title: 'Access your business dashboard',
       body: 'Manage listings, verification details, contact info, and local discovery surfaces from one place.',
@@ -21,11 +21,11 @@ function getLoginConfig(kind: ReturnType<typeof getProductKind>) {
   }
   if (kind === 'editorial') {
     return {
-      shell: 'bg-[#fbf6ee] text-[#241711]',
-      panel: 'border border-[#dcc8b7] bg-[#fffdfa]',
-      side: 'border border-[#e6d6c8] bg-[#fff4e8]',
-      muted: 'text-[#6e5547]',
-      action: 'bg-[#241711] text-[#fff1e2] hover:bg-[#3a241b]',
+      shell: 'bg-[#f8f0f7] text-[#5B2B3B]',
+      panel: 'border border-[#e6d4e0] bg-[#fdf5fb] shadow-[0_24px_60px_rgba(91,43,59,0.08)]',
+      side: 'border border-[#e6d4e0] bg-[#f5eef2]',
+      muted: 'text-[#7a5d6b]',
+      action: 'bg-[#f73d93] text-white hover:bg-[#e639b8]',
       icon: FileText,
       title: 'Sign in to your publication workspace',
       body: 'Draft, review, and publish long-form work with the calmer reading system intact.',
@@ -33,22 +33,22 @@ function getLoginConfig(kind: ReturnType<typeof getProductKind>) {
   }
   if (kind === 'visual') {
     return {
-      shell: 'bg-[#07101f] text-white',
-      panel: 'border border-white/10 bg-white/6',
-      side: 'border border-white/10 bg-white/5',
-      muted: 'text-slate-300',
-      action: 'bg-[#8df0c8] text-[#07111f] hover:bg-[#77dfb8]',
+      shell: 'bg-[#5B2B3B] text-white',
+      panel: 'border border-white/10 bg-[rgba(91,43,59,0.78)] shadow-[0_28px_80px_rgba(0,0,0,0.35)]',
+      side: 'border border-white/10 bg-white/6',
+      muted: 'text-[#f5eef2]',
+      action: 'bg-[#f73d93] text-white hover:bg-[#e639b8]',
       icon: ImageIcon,
       title: 'Enter the creator workspace',
       body: 'Open your visual feed, creator profile, and publishing tools without dropping into a generic admin shell.',
     }
   }
   return {
-    shell: 'bg-[#f7f1ea] text-[#261811]',
-    panel: 'border border-[#ddcdbd] bg-[#fffaf4]',
-    side: 'border border-[#e8dbce] bg-[#f3e8db]',
-    muted: 'text-[#71574a]',
-    action: 'bg-[#5b2b3b] text-[#fff0f5] hover:bg-[#74364b]',
+    shell: 'bg-[#f8f0f7] text-[#5B2B3B]',
+    panel: 'border border-[#e6d4e0] bg-[#fdf5fb] shadow-[0_24px_60px_rgba(91,43,59,0.08)]',
+    side: 'border border-[#e6d4e0] bg-[#f5eef2]',
+    muted: 'text-[#7a5d6b]',
+    action: 'bg-[#5B2B3B] text-[#fdf5fb] hover:bg-[#4a2238]',
     icon: Bookmark,
     title: 'Open your curated collections',
     body: 'Manage saved resources, collection notes, and curator identity from a calmer workspace.',
